@@ -55,9 +55,9 @@ password = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SEL
 # improvement - save username/password in file and read credentials from there for security reasons
 # login is required to access instagram photos
 username.clear()
-username.send_keys("gnomean98")
+username.send_keys("user")
 password.clear()
-password.send_keys("Samsungsoundbyakg")
+password.send_keys("password")
 
 # click on log in button identified by unique html element
 loginButton = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
