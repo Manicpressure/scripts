@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Fetch current governor
+current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+
+# If the script is called with "toggle" argument, toggle the governor
+# sudo pacman -S linux-tools > power
+if [ "$1" == "toggle" ]; then
+    if [ "$current_governor" == "performance" ]; then
+        echo "switching to powersave"
+        cpupower frequency-set -g powersave
+    else
+        echo "switching to performance"
+        cpupower frequency-set -g performance
+    fi
+    
+    # Send signal to Waybar to update the custom/governor module
+    pkill -RTMIN+10 waybar
+    
+    exit
+fi
+
+# Output the current governor
+if [ "$current_governor" == "performance" ]; then
+    echo "⚡P"
+elif [ "$current_governor" == "powersave" ]; then
+    echo "🍃E"
+else
+    echo "❓"
+fi
+
+
+# add the below to waybar modules
+#"custom/governor": {
+#    "format": "{}",
+#    "exec": "/usr/local/bin/cpuGovernor.sh",
+#    "on-click": "/usr/local/bin/cpuGovernor.sh toggle",
+#    "tooltip": "cpupower frequency-set -g $current_governor"
+#}
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NIC=**CHANGEME**
+RX_PREV=$(cat /sys/class/net/${NIC}/statistics/rx_bytes)
+TX_PREV=$(cat /sys/class/net/${NIC}/statistics/tx_bytes)
+sleep 5
+RX_BYTES=$(cat /sys/class/net/${NIC}/statistics/rx_bytes)
+TX_BYTES=$(cat /sys/class/net/${NIC}/statistics/tx_bytes)
+
+RX_BPS=$(( (RX_BYTES - RX_PREV) / 5 / 1024 ))
+TX_BPS=$(( (TX_BYTES - TX_PREV) / 5 / 1024 ))
+
+echo "↓${RX_BPS}kb/s ↑${TX_BPS}kb/s"
+
